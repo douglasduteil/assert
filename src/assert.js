@@ -11,7 +11,13 @@ function argPositionName(i) {
   return POSITION_NAME[position] || (position + 'th');
 }
 
-var primitives = $traceurRuntime.type;
+var primitives = {};
+
+primitives['any'] = define('any', function() { return true; });
+
+primitives['void'] = define('voidType', function(value) {
+  return typeof value === 'undefined';
+});
 
 function assertArgumentTypes(...params) {
   var actual, type;
@@ -318,6 +324,9 @@ assert.fail = fail;
 assert.string = string;
 assert.number = number;
 assert.boolean = boolean;
+
+assert['any'] = primitives['any'];
+assert['void'] = primitives['void'];
 
 // custom types
 assert.arrayOf = arrayOf;
